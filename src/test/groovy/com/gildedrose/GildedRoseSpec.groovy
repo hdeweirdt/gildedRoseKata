@@ -15,7 +15,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{item});
 
         when: "updating quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "the quality has not become negative"
         app.items[0].quality >= 0
@@ -35,14 +35,14 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{item});
 
         when: "updating quality the first time"
-        app.updateQuality()
+        app.nextDay()
 
         then: "the difference in quality is noted"
         def qualityAfterFirstDay = app.items[0].quality
         int differenceInQualityFresh = originalQuality - qualityAfterFirstDay
 
         when: "updating the quality the second time"
-        app.updateQuality()
+        app.nextDay()
 
         then: "the quality has not become negative"
         int differenceInQualityRotting = qualityAfterFirstDay - app.items[0].quality
@@ -58,7 +58,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{brie});
 
         when: "updating the quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "the quality of the brie has increased"
         brie.quality > originalQuality
@@ -70,7 +70,7 @@ class GildedRoseSpec extends Specification {
 
         when: "updating the quality a few times"
         for (i in 0..50) {
-            app.updateQuality();
+            app.nextDay();
         }
 
         then: "the quality has or has not changed to the max amount"
@@ -93,7 +93,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{sulfuras});
 
         when: "updating the quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "Sulfaras still  does not need to be sold"
         sulfuras.sellIn == 0
@@ -108,7 +108,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{sulfuras});
 
         when: "updating the quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "Sulfaras still  does not need to be sold"
         sulfuras.quality == originalQuality
@@ -123,7 +123,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{backstagePass});
 
         when: "updating the quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "the quality of the backstagePass has dropped as expected"
         def qualityIncrease = backstagePass.quality - originalQuality
@@ -146,7 +146,7 @@ class GildedRoseSpec extends Specification {
         GildedRose app = new GildedRose(new Item[]{backstagePass});
 
         when: "updating the quality"
-        app.updateQuality();
+        app.nextDay();
 
         then: "the quality of the backstagePass has dropped to 0"
         backstagePass.quality == 0
