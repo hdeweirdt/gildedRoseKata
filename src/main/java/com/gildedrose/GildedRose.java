@@ -1,58 +1,49 @@
 package com.gildedrose;
 
+import com.gildedrose.updateHandlers.LegendaryItemUpdateHandler;
+import com.gildedrose.updateHandlers.UpdateHandler;
+import com.gildedrose.updateHandlers.quality.BackStagePassQualityUpdateHandler;
+import com.gildedrose.updateHandlers.quality.BetterWithAgeQualityUpdateHandler;
+import com.gildedrose.updateHandlers.quality.DefaultQualityUpdateHandler;
+import com.gildedrose.updateHandlers.quality.QualityUpdateHandler;
+
+import java.util.List;
+
 class GildedRose {
-    private static final int NORMAL_ITEM_MAX_QUALITY = 50;
-    private static final int MIN_QUALITY = 0;
+
+    private final List<UpdateHandler> qualityUpdateHandlers;
+    private final QualityUpdateHandler defaultQualityUpdateHandler;
+
 
     Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
+        this.qualityUpdateHandlers = List.of(
+                new BackStagePassQualityUpdateHandler(),
+                new BetterWithAgeQualityUpdateHandler(),
+                new LegendaryItemUpdateHandler());
+        defaultQualityUpdateHandler = new DefaultQualityUpdateHandler();
+
     }
 
     public void nextDay() {
         for (Item item : items) {
             updateSellIn(item);
-            
-            updateQuality(item);
 
-            handleExpired(item);
+            updateQuality(item);
         }
     }
 
     private void updateQuality(Item item) {
-        if (getsBetterWithAge(item)) {
-            increaseItemQuality(item);
-        } else {
-            decreaseQuality(item);
-        }
+        findAppropriateUpdateHandler(item).update(item);
     }
 
-    private boolean getsBetterWithAge(Item item) {
-        return item.name.equals("Aged Brie") || item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    private void increaseItemQuality(Item item) {
-        item.quality += 1;
-        handleBackStagePasses(item);
-        item.quality = Math.min(item.quality, NORMAL_ITEM_MAX_QUALITY);
-    }
-
-    private void handleBackStagePasses(Item item) {
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if (item.sellIn < 11) {
-                item.quality += 1;
-            }
-            if (item.sellIn < 6) {
-                item.quality += 1;
-            }
-        }
-    }
-
-    private void decreaseQuality(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            item.quality = Math.max(item.quality - 1, MIN_QUALITY);
-        }
+    private UpdateHandler findAppropriateUpdateHandler(Item item) {
+        return qualityUpdateHandlers.stream()
+                .filter(qualityUpdateHandler -> qualityUpdateHandler.matches(item))
+                .findFirst()
+                .orElse(defaultQualityUpdateHandler);
     }
 
     private void updateSellIn(Item item) {
@@ -61,25 +52,5 @@ class GildedRose {
         }
     }
 
-    private void handleExpired(Item item) {
-        if (pastExpirationDate(item)) {
-            if(decreasesInValueOverTime(item)) {
-                decreaseQuality(item);
-            } else {
-               if(item.name.equals("Aged Brie"))  {
-                   increaseItemQuality(item);
-               } else if(item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                   item.quality= 0;
-               }
-            }
-        }
-    }
 
-    private boolean decreasesInValueOverTime(Item item) {
-        return !item.name.equals("Aged Brie") && !item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    private boolean pastExpirationDate(Item item) {
-        return item.sellIn < 0;
-    }
 }
