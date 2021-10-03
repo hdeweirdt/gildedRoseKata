@@ -2,10 +2,7 @@ package com.gildedrose;
 
 import com.gildedrose.updateHandlers.LegendaryItemUpdateHandler;
 import com.gildedrose.updateHandlers.UpdateHandler;
-import com.gildedrose.updateHandlers.quality.BackStagePassQualityUpdateHandler;
-import com.gildedrose.updateHandlers.quality.BetterWithAgeQualityUpdateHandler;
-import com.gildedrose.updateHandlers.quality.DefaultQualityUpdateHandler;
-import com.gildedrose.updateHandlers.quality.QualityUpdateHandler;
+import com.gildedrose.updateHandlers.quality.*;
 
 import java.util.List;
 
@@ -22,6 +19,7 @@ class GildedRose {
         this.qualityUpdateHandlers = List.of(
                 new BackStagePassQualityUpdateHandler(),
                 new BetterWithAgeQualityUpdateHandler(),
+                new ConjuredQualityUpdateHandler(),
                 new LegendaryItemUpdateHandler());
         defaultQualityUpdateHandler = new DefaultQualityUpdateHandler();
 

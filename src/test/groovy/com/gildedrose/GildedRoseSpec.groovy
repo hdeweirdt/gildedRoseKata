@@ -152,4 +152,24 @@ class GildedRoseSpec extends Specification {
         backstagePass.quality == 0
     }
 
+    def "Conjured items degrade in Quality twice as fast as normal items"() {
+        def startingQuality = 10
+        given:
+        Item normalItem = new Item("Backpack", 5, startingQuality)
+        and:
+        Item conjuredItem = new Item("Conjured backpack", 5, startingQuality)
+
+        and: "the application with these items"
+        GildedRose app = new GildedRose(new Item[]{normalItem, conjuredItem})
+
+        when:
+        app.nextDay()
+
+        then:
+        def normalDifferenceInQuality = startingQuality - normalItem.quality
+        def conjuredDifferenceInQuality = startingQuality - conjuredItem.quality
+
+        conjuredDifferenceInQuality == normalDifferenceInQuality * 2
+    }
+
 }
