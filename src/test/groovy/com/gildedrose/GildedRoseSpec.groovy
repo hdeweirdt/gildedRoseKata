@@ -9,13 +9,13 @@ class GildedRoseSpec extends Specification {
 
     def "The Quality of an item is never negative"() {
         given: "an item"
-        Item item = new Item("foo", sellIn, quality);
+        Item item = new Item("foo", sellIn, quality)
 
         and: "the application with these items"
-        GildedRose app = new GildedRose(new Item[]{item});
+        GildedRose app = new GildedRose(new Item[]{item})
 
         when: "updating quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "the quality has not become negative"
         app.items[0].quality >= 0
@@ -29,10 +29,10 @@ class GildedRoseSpec extends Specification {
     def "Once the sell by date has passed, Quality degrades twice as fast"() {
         given: "an item"
         int originalQuality = 10
-        Item item = new Item("foo", 1, originalQuality);
+        Item item = new Item("foo", 1, originalQuality)
 
         and: "the application with these items"
-        GildedRose app = new GildedRose(new Item[]{item});
+        GildedRose app = new GildedRose(new Item[]{item})
 
         when: "updating quality the first time"
         app.nextDay()
@@ -55,10 +55,10 @@ class GildedRoseSpec extends Specification {
         Item brie = new Item("Aged Brie", 2, originalQuality)
 
         and: "the application with these items"
-        GildedRose app = new GildedRose(new Item[]{brie});
+        GildedRose app = new GildedRose(new Item[]{brie})
 
         when: "updating the quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "the quality of the brie has increased"
         brie.quality > originalQuality
@@ -66,11 +66,11 @@ class GildedRoseSpec extends Specification {
 
     def "The quality of an item never increases above 50, Except for Sulfaras"() {
         given: "the application with an item"
-        GildedRose app = new GildedRose(new Item[]{item});
+        GildedRose app = new GildedRose(new Item[]{item})
 
         when: "updating the quality a few times"
         for (i in 0..50) {
-            app.nextDay();
+            app.nextDay()
         }
 
         then: "the quality has or has not changed to the max amount"
@@ -90,10 +90,10 @@ class GildedRoseSpec extends Specification {
         Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 0, 80)
 
         and: "the application with the item"
-        GildedRose app = new GildedRose(new Item[]{sulfuras});
+        GildedRose app = new GildedRose(new Item[]{sulfuras})
 
         when: "updating the quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "Sulfaras still  does not need to be sold"
         sulfuras.sellIn == 0
@@ -105,10 +105,10 @@ class GildedRoseSpec extends Specification {
         Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 0, originalQuality)
 
         and: "the application with the item"
-        GildedRose app = new GildedRose(new Item[]{sulfuras});
+        GildedRose app = new GildedRose(new Item[]{sulfuras})
 
         when: "updating the quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "Sulfaras still  does not need to be sold"
         sulfuras.quality == originalQuality
@@ -120,10 +120,10 @@ class GildedRoseSpec extends Specification {
         Item backstagePass = new Item("Backstage passes to a TAFKAL80ETC concert", daysRemaining, originalQuality)
 
         and: "the application with the backstagePass"
-        GildedRose app = new GildedRose(new Item[]{backstagePass});
+        GildedRose app = new GildedRose(new Item[]{backstagePass})
 
         when: "updating the quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "the quality of the backstagePass has dropped as expected"
         def qualityIncrease = backstagePass.quality - originalQuality
@@ -143,10 +143,10 @@ class GildedRoseSpec extends Specification {
         Item backstagePass = new Item("Backstage passes to a TAFKAL80ETC concert", 0, 50)
 
         and: "the application with the backstagePass"
-        GildedRose app = new GildedRose(new Item[]{backstagePass});
+        GildedRose app = new GildedRose(new Item[]{backstagePass})
 
         when: "updating the quality"
-        app.nextDay();
+        app.nextDay()
 
         then: "the quality of the backstagePass has dropped to 0"
         backstagePass.quality == 0

@@ -15,7 +15,7 @@ class GildedRose {
     private final QualityUpdateHandler defaultQualityUpdateHandler;
 
 
-    Item[] items;
+    final Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
