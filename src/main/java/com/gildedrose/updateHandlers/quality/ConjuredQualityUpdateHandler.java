@@ -18,9 +18,9 @@ public class ConjuredQualityUpdateHandler extends QualityUpdateHandler {
     }
 
     @Override
-    protected void updateQuality(Item item) {
+    protected void performQualityUpdate(Item item) {
         for (int i = 0; i < TIMES_FASTER_THAN_NORMAL; i++) {
-            defaultQualityUpdateHandler.updateQuality(item);
+            defaultQualityUpdateHandler.performQualityUpdate(item);
         }
     }
 }

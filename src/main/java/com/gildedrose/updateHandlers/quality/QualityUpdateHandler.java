@@ -7,9 +7,9 @@ public abstract class QualityUpdateHandler extends UpdateHandler {
 
     @Override
     protected void performUpdate(Item item) {
-       updateQuality(item);
+       performQualityUpdate(item);
     }
 
-    protected abstract void updateQuality(Item item);
+    protected abstract void performQualityUpdate(Item item);
 
 }

@@ -22,7 +22,11 @@ public abstract class UpdateHandler {
         defaultExpirationUpdateHandler = new DefaultExpirationUpdateHandler();
     }
 
-    public void update(Item item){
+    public void updateSellIn(Item item) {
+        item.sellIn -= 1;
+    }
+
+    public void updateQuality(Item item) {
         performUpdate(item);
         handleExpired(item);
         item.quality = Math.min(item.quality, NORMAL_ITEM_MAX_QUALITY);

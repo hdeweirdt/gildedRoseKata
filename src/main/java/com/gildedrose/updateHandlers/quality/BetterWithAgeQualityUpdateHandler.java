@@ -5,7 +5,7 @@ import com.gildedrose.Item;
 public class BetterWithAgeQualityUpdateHandler extends QualityUpdateHandler {
 
     @Override
-    public void updateQuality(Item item) {
+    public void performQualityUpdate(Item item) {
         item.quality += 1;
     }
 

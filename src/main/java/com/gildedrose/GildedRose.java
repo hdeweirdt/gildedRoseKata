@@ -11,7 +11,6 @@ class GildedRose {
     private final List<UpdateHandler> qualityUpdateHandlers;
     private final QualityUpdateHandler defaultQualityUpdateHandler;
 
-
     final Item[] items;
 
     public GildedRose(Item[] items) {
@@ -27,14 +26,13 @@ class GildedRose {
 
     public void nextDay() {
         for (Item item : items) {
-            updateSellIn(item);
-
-            updateQuality(item);
+            updateItem(item);
         }
     }
 
-    private void updateQuality(Item item) {
-        findAppropriateUpdateHandler(item).update(item);
+    private void updateItem(Item item) {
+        findAppropriateUpdateHandler(item).updateSellIn(item);
+        findAppropriateUpdateHandler(item).updateQuality(item);
     }
 
     private UpdateHandler findAppropriateUpdateHandler(Item item) {
@@ -43,12 +41,5 @@ class GildedRose {
                 .findFirst()
                 .orElse(defaultQualityUpdateHandler);
     }
-
-    private void updateSellIn(Item item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            item.sellIn = item.sellIn - 1;
-        }
-    }
-
 
 }
