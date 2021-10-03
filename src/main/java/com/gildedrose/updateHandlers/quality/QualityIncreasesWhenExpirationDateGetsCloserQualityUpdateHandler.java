@@ -2,7 +2,7 @@ package com.gildedrose.updateHandlers.quality;
 
 import com.gildedrose.Item;
 
-public class BackStagePassQualityUpdateHandler extends QualityUpdateHandler {
+public class QualityIncreasesWhenExpirationDateGetsCloserQualityUpdateHandler extends QualityUpdateHandler {
 
     @Override
     public void performQualityUpdate(Item item) {

@@ -16,7 +16,7 @@ class GildedRose {
     public GildedRose(Item[] items) {
         this.items = items;
         this.qualityUpdateHandlers = List.of(
-                new BackStagePassQualityUpdateHandler(),
+                new QualityIncreasesWhenExpirationDateGetsCloserQualityUpdateHandler(),
                 new BetterWithAgeQualityUpdateHandler(),
                 new ConjuredQualityUpdateHandler(),
                 new LegendaryItemUpdateHandler());
